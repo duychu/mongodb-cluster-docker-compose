@@ -3,7 +3,8 @@ services:
 
   genieacs:
     depends_on:
-      - "mongo"
+      - "router01"
+      - "router02"
     image: duycb92/genieacs:latest
     restart: always
     container_name: "genieacs"
