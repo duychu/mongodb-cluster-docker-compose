@@ -75,11 +75,11 @@ docker-compose exec router01 sh -c "mongo < /scripts/init-router.js"
 ```bash
 docker-compose exec router01 mongo --port 27017
 
-// Enable sharding for database `MyDatabase`
-sh.enableSharding("MyDatabase")
+// Enable sharding for database `genieacs`
+sh.enableSharding("genieacs")
 
-// Setup shardingKey for collection `MyCollection`**
-db.adminCommand( { shardCollection: "MyDatabase.MyCollection", key: { supplierId: "hashed" } } )
+// Setup shardingKey for collection `devices`**
+db.adminCommand( { shardCollection: "genieacs.devices", key: { _id: "hashed" } } )
 
 ```
 
@@ -266,9 +266,9 @@ bye
 - **Check database status**
 ```bash
 docker-compose exec router01 mongo --port 27017
-use MyDatabase
+use genieacs
 db.stats()
-db.MyCollection.getShardDistribution()
+db.devices.getShardDistribution()
 ```
 
 *Sample Result:*
@@ -276,7 +276,7 @@ db.MyCollection.getShardDistribution()
 {
         "raw" : {
                 "rs-shard-01/shard01-a:27017,shard01-b:27017,shard01-c:27017" : {
-                        "db" : "MyDatabase",
+                        "db" : "genieacs",
                         "collections" : 1,
                         "views" : 0,
                         "objects" : 0,
@@ -291,7 +291,7 @@ db.MyCollection.getShardDistribution()
                         "ok" : 1
                 },
                 "rs-shard-03/shard03-a:27017,shard03-b:27017,shard03-c:27017" : {
-                        "db" : "MyDatabase",
+                        "db" : "genieacs",
                         "collections" : 1,
                         "views" : 0,
                         "objects" : 0,
@@ -306,7 +306,7 @@ db.MyCollection.getShardDistribution()
                         "ok" : 1
                 },
                 "rs-shard-02/shard02-a:27017,shard02-b:27017,shard02-c:27017" : {
-                        "db" : "MyDatabase",
+                        "db" : "genieacs",
                         "collections" : 1,
                         "views" : 0,
                         "objects" : 0,
