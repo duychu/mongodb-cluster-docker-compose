@@ -25,6 +25,30 @@ services:
     volumes:
       - opt_volume:/opt
 
+  genieacs2:
+    depends_on:
+      - "router01"
+      - "router02"
+    image: duycb92/genieacs:latest
+    restart: always
+    container_name: "genieacs2"
+    environment:
+      - GENIEACS_UI_JWT_SECRET=changeme
+      - GENIEACS_CWMP_ACCESS_LOG_FILE=/var/log/genieacs/genieacs-cwmp-access.log
+      - GENIEACS_NBI_ACCESS_LOG_FILE=/var/log/genieacs/genieacs-nbi-access.log
+      - GENIEACS_FS_ACCESS_LOG_FILE=/var/log/genieacs/genieacs-fs-access.log
+      - GENIEACS_UI_ACCESS_LOG_FILE=/var/log/genieacs/genieacs-ui-access.log
+      - GENIEACS_DEBUG_FILE=/var/log/genieacs/genieacs-debug.yaml
+      - GENIEACS_EXT_DIR=/opt/genieacs/ext
+      - GENIEACS_MONGODB_CONNECTION_URL=mongodb://router01:27017,router02:27017/genieacs2
+    ports:
+      - "7547:7547"
+      - "7557:7557"
+      - "7567:7567"
+      - "3000:3000"
+    volumes:
+      - opt_volume:/opt
+
 ## Router
   router01:
     image: mongo:4.0
